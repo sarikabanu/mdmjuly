@@ -20,6 +20,6 @@ _Routes.app.configure(app);
 _Routes.device.configure(app);
 
 
-var server = app.listen(process.env.PORT || 60, function() {
+var server = app.listen(process.env.PORT || 6000, function() {
     console.log('Server listening on port ' + server.address().port);
 });
