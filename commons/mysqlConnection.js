@@ -6,8 +6,8 @@ var pool = mysql.createPool({
     host            :  setconfig.properties.mysqlConnection.host,
     user            :  setconfig.properties.mysqlConnection.user,
     password        :  setconfig.properties.mysqlConnection.password,
-    database        :  setconfig.properties.mysqlConnection.database
-    // connectionLimit :  setconfig.properties.mysqlConnection.connectionLimit
+    database        :  setconfig.properties.mysqlConnection.database,
+    connectionLimit : 100
 });
 
 this.releaseConnection = function(conn){

@@ -1,8 +1,4 @@
 var FCM = require('fcm-node');
-
-setconfig = require('../config/setconfig');
-setconfig.setConf(false);
-
 var serverKey = setconfig.properties.fcmNotification.serverKey
 
 var fcm = new FCM(serverKey);

@@ -1,7 +1,5 @@
 uuid = require('uuid');
 db = require('../commons/mysqlConnection').pool;
-setconfig = require('../config/setconfig');
-setconfig.setConf(false);
 Q = require('q');
 
 console.log('in route init');

@@ -1,8 +1,5 @@
 const uuid = require('uuid');
-multer = require('multer'),
-  
-setconfig = require('../config/setconfig');
-setconfig.setConf(false);
+multer = require('multer')
 
 var storage = multer.memoryStorage();
 var upload = multer()
