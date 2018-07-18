@@ -50,6 +50,38 @@ getUserInfoByUserId(result) {
 //         return this.userInstance;
 //     }
 
+updateUserReg(request,result) {
+    let response={},name,device_id,fcm_token
+  
+       if(request.name!=null||request.name!=""||request.name!=undefined)
+          {
+              name=request.name;
+          }
+          else{
+              name=result[0].Name;
+          }
+       if(request.device_id!=null||request.device_id!=""||request.device_id!=undefined)
+          {
+              device_id=request.device_id;
+          }
+          else{
+              device_id=result[0].DeviceId;
+          }
+      if(request.fcm_token!=null||request.fcm_token!=""||request.fcm_token!=undefined)
+          {
+              fcm_token=request.fcm_token;
+          }
+          else{
+              fcm_token=result[0].FcmToken;
+          }
+          return response = {
+              name,
+              device_id,
+              fcm_token,
+              ModifiedDate: new Date(),
+          }
+     }
+  
 updateUser(request,result) {
   let response={},name,phoneNumber,device_id,profile_url,fcm_token
 

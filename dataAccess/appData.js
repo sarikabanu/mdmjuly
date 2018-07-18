@@ -32,7 +32,7 @@ function appDataAccess() {
                                 }
                                 else {
                                     console.log('successfully updated')
-                                    //  callback(null, true);
+                                      callback(null, true);
                                 }
                             });
                         } else {
@@ -44,83 +44,82 @@ function appDataAccess() {
                                 }
                                 else {
                                     console.log('successful insertion')
-                                    //   callback(null, true);
+                                      callback(null, true);
                                 }
                             });
                         }
                     });
                 }
-                callback(null, true);
             }
         });
     },
 
 
-        this.appAction = function (request, callback) {
-            const appModel = new App();
-            db.getConnection(function (err, con) {
-                if (err) {
-                    logging.LoggingFunction('appAction', err);
-                    callback(new Error(" in connecting to database"));
-                }
-                else {
-                    con.query('Select * from app where AppId = ?', request.app_id, function (err, userResult) {
-                        if (err) {
-                            logging.LoggingFunction('appAction', err);
-                            callback(new Error("could not get details of current app"));
-                        }
-                        else
-                            if (userResult.length > 0) {
-                                app = userResult[0].Name
-                                console.log('appname 1 in appdata ' + app)
-                                con.query('update app set Status = ? where AppId = ? and DeviceId = ?', [request.status, request.app_id, request.device_id], function (err, result) {
-                                    if (err) {
-                                        logging.LoggingFunction('appAction', err);
-                                        callback(new Error("while inserting"));
-                                    } else {
-                                        con.query('select FcmToken from user where DeviceId = ? and PhoneNumber = ?', [request.device_id, request.phoneNumber], function (err, result) {
-                                            if (err) {
-                                                logging.LoggingFunction('appAction', err);
-                                                callback(new Error("could not found user"));
+    this.appAction = function (request, callback) {
+        const appModel = new App();
+        db.getConnection(function (err, con) {
+            if (err) {
+                logging.LoggingFunction('appAction', err);
+                callback(new Error(" in connecting to database"));
+            }
+            else {
+                con.query('Select * from app where AppId = ?', request.app_id, function (err, userResult) {
+                    if (err) {
+                        logging.LoggingFunction('appAction', err);
+                        callback(new Error("could not get details of current app"));
+                    }
+                    else
+                        if (userResult.length > 0) {
+                            app = userResult[0].Name
+                            console.log('appname 1 in appdata ' + app)
+                            con.query('update app set Status = ? where AppId = ? and DeviceId = ?', [request.status, request.app_id, request.device_id], function (err, result) {
+                                if (err) {
+                                    logging.LoggingFunction('appAction', err);
+                                    callback(new Error("while inserting"));
+                                } else {
+                                    con.query('select FcmToken from user where DeviceId = ? and PhoneNumber = ?', [request.device_id, request.phoneNumber], function (err, result) {
+                                        if (err) {
+                                            logging.LoggingFunction('appAction', err);
+                                            callback(new Error("could not found user"));
+                                        }
+                                        else
+                                        if (result.length > 0) {
+                                            const fcm_token = result.length
+                                            for (i = 0; i < fcm_token; i++) {
+                                                let fcmtoken = result[i].FcmToken
+                                                console.log('fcm    ' + fcmtoken)
+                                                if (fcmtoken != null) {
+                                                    status = request.status
+                                                    app_id = request.app_id
+                                                    console.log('appname2 in appdata ' + app)
+                                                    console.log('status in appdata' + status)
+                                                    notify.sendNotification(fcmtoken, status, app_id, app);
+                                                    console.log('successfuly sent notification')
+                                                }
                                             }
-                                            else
-                                                if (result.length > 0) {
-                                                    const fcm_token = result.length
-                                                    for (i = 0; i < fcm_token; i++) {
-                                                        let fcmtoken = result[i].FcmToken
-                                                        console.log('fcm    ' + fcmtoken)
-                                                        if (fcmtoken != null) {
-                                                            status = request.status
-                                                            app_id = request.app_id
-                                                            console.log('appname2 in appdata ' + app)
-                                                            console.log('status in appdata' + status)
-                                                            notify.sendNotification(fcmtoken, status, app_id, app);
-                                                            console.log('successfuly sent notification')
-                                                        }
-                                                    }
-                                                    callback(null, true);
-                                                }
-                                                else {
-                                                    logging.LoggingFunction('appAction', err);
-                                                    callback(new Error("could not get fcm token of user"));
-                                                }
-                                        });
-                                    }
-                                });
-                            }
-                            else {
-                                logging.LoggingFunction('appAction', 'no rows in database');
-                                callback(new Error("no rows in database"));
-                            }
+                                            callback(null, true);
+                                        }
+                                        else {
+                                            logging.LoggingFunction('appAction', err);
+                                            callback(new Error("could not get fcm token of user"));
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            logging.LoggingFunction('appAction', 'no rows in database');
+                            callback(new Error("no rows in database"));
+                        }
 
-                    });
-                }
-                //  db.end(function(err){
-                // if(!err)connection=null;
-                // else console.log(err)
-                // });
-            });
-        },
+                });
+            }
+            //  db.end(function(err){
+            // if(!err)connection=null;
+            // else console.log(err)
+            // });
+        });
+    },
 
         //u ll get app wic is added on curent date
         this.getAppInfoByDeviceId = function (DeviceId, callback) {
@@ -139,7 +138,7 @@ function appDataAccess() {
                         }
                         else if (userResult.length > 0) {
                             console.log('data is present')
-                            console.log(userResult)
+                            //console.log(userResult)
 
                             // let result = appModel.getAppInfoByDeviceId(userResult);
                             callback(null, userResult);
