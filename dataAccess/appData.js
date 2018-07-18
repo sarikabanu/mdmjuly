@@ -6,6 +6,8 @@ var notify = require('../commons/notification');
 function appDataAccess() {
 
     this.appInsert = function (request, callback) {
+        console.log('request '+request[0].device_id)
+        console.log(request[0].device_id)
         const appModel = new App();
         db.getConnection(function (err, con) {
             if (err) {
@@ -22,7 +24,8 @@ function appDataAccess() {
                             logging.LoggingFunction('appInsert', err);
                             callback(new Error("while fetching data of curent app"));
                         }
-                        else if (userResult.length > 0) {
+                        else{
+                             if (userResult.length > 0) {
                             console.log('updating')
                             //    let appup = appModel.appUpdate(appuse,userResult);
                             con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appuse.Version, appuse.Icon, appuse.ModifiedDate, appuse.AppId, appuse.DeviceId], function (err, result) {
@@ -32,7 +35,7 @@ function appDataAccess() {
                                 }
                                 else {
                                     console.log('successfully updated')
-                                    callback(null, true);
+                                   // callback(null, true);
                                 }
                             });
                         } else {
@@ -44,12 +47,14 @@ function appDataAccess() {
                                 }
                                 else {
                                     console.log('successful insertion')
-                                    callback(null, true);
                                 }
                             });
                         }
+                     }
                     });
                 }
+                callback(null, true);
+
             }
         });
     },

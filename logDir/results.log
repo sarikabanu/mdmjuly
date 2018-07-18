@@ -1,3 +1,6 @@
 {"API":"loginUser","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-16T07:06:58.972Z"}
 {"API":"getAppInfoByDeviceId","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-18T05:03:45.217Z"}
 {"API":"getDeviceInfo","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-18T05:11:02.466Z"}
+{"API":"userTokenUpdate","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-18T10:34:38.396Z"}
+{"API":"userTokenUpdate","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-18T10:41:33.742Z"}
+{"API":"userTokenUpdate","MESSAGE":"no rows in database","level":"info","message":"","timestamp":"2018-07-18T10:48:36.333Z"}

@@ -5,7 +5,7 @@ var logging  = require('../commons/logging');
 function appController() {
 
  this.insert = function (req, res) {
-     console.log('req  ' + req.body[0].app_id) 
+     console.log('req appid  ' + req.body[0].app_id) 
     if (!req.body) {
         res.status(400).send({ error:'fields are required' })
     }else {

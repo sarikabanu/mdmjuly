@@ -4,7 +4,7 @@ class App {
 
     appmod(data) {
 
-        console.log('appid in model' + data.app_id)
+        console.log('appid in model' + data.device_id)
         this.appInstance = {
             AppId: data.app_id,
             Name: data.name,
