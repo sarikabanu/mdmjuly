@@ -27,7 +27,6 @@ class App {
             Icon: data.Icon,
             DeviceId: data.DeviceId,
             CreatedDate: new Date(),
-            CreatedBy: uuid(),
             Status: 1,
         };
         return this.appInstance;

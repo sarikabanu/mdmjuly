@@ -6,7 +6,7 @@ var notify = require('../commons/notification');
 function appDataAccess() {
 
     this.appInsert = function (request, callback) {
-        console.log('request '+request[0].device_id)
+        console.log('request ' + request[0].device_id)
         console.log(request[0].device_id)
         const appModel = new App();
         db.getConnection(function (err, con) {
@@ -19,38 +19,38 @@ function appDataAccess() {
                 for (i; i < request.length; i++) {
 
                     let appuse = appModel.appmod(request[i]);
-                    con.query('Select * from app where AppId = ? and DeviceId = ?', [appuse.AppId,appuse.DeviceId], function (err, userResult) {
+                    con.query('Select * from app where AppId = ? and DeviceId = ?', [appuse.AppId, appuse.DeviceId], function (err, userResult) {
                         if (err) {
                             logging.LoggingFunction('appInsert', err);
                             callback(new Error("while fetching data of curent app"));
                         }
-                        else{
-                             if (userResult.length > 0) {
-                            console.log('updating')
-                            //    let appup = appModel.appUpdate(appuse,userResult);
-                            con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appuse.Version, appuse.Icon, appuse.ModifiedDate, appuse.AppId, appuse.DeviceId], function (err, result) {
-                                if (err) {
-                                    logging.LoggingFunction('appupdate', err);
-                                    callback(new Error("while updating"));
-                                }
-                                else {
-                                    console.log('successfully updated')
-                                   // callback(null, true);
-                                }
-                            });
-                        } else {
-                            let appInstance = appModel.appInsert(appuse);
-                            con.query('insert into app set ?', appInstance, function (err, result) {
-                                if (err) {
-                                    logging.LoggingFunction('appInsert', err);
-                                    callback(new Error("while inserting"));
-                                }
-                                else {
-                                    console.log('successful insertion')
-                                }
-                            });
+                        else {
+                            if (userResult.length > 0) {
+                                console.log('updating')
+                                //    let appup = appModel.appUpdate(appuse,userResult);
+                                con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appuse.Version, appuse.Icon, appuse.ModifiedDate, appuse.AppId, appuse.DeviceId], function (err, result) {
+                                    if (err) {
+                                        logging.LoggingFunction('appupdate', err);
+                                        callback(new Error("while updating"));
+                                    }
+                                    else {
+                                        console.log('successfully updated')
+                                        // callback(null, true);
+                                    }
+                                });
+                            } else {
+                                let appInstance = appModel.appInsert(appuse);
+                                con.query('insert into app set ?', appInstance, function (err, result) {
+                                    if (err) {
+                                        logging.LoggingFunction('appInsert', err);
+                                        callback(new Error("while inserting"));
+                                    }
+                                    else {
+                                        console.log('successful insertion')
+                                    }
+                                });
+                            }
                         }
-                     }
                     });
                 }
                 callback(null, true);
