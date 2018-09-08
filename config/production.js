@@ -8,7 +8,7 @@
         port: 3306,
         ssl: true
     },
-     fcmNotification:{
-        serverKey:'AAAAZPjP9fo:APA91bEoDJ-D5Mo8rQo92FqiaGUIlsDanal0ltURFh5rPYfiMqCspJdkKOYBWybNGhI4rBUAFNCPT4vgy9FKKEj1N4_2lk0b0a8K_tcQPJPGBYmXNAJrzMlQXDzpvxzgxDUmae-c_hpr'
+    fcmNotification:{
+        serverKey:'AAAA_hJLeBU:APA91bGOscuuRnVgZaNElU40wNsluullQx5hSbSsYL8OVeo2aEfuhKxER4MGiEsb5rSHbcopNxg-coMW4VYV5n7TtXblrWVZcRtABFAhfHnnipUJZNZMV7nVd2VM6mI2lX3pgkHkEKmV'
     }
 }
