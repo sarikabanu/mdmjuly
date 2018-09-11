@@ -25,7 +25,7 @@ function appController() {
                 }
                 else {
                     // console.log('New app_id ' + req.body[j].app_id);
-                    // appCategories.push(req.body[j].app_id);
+                    appCategories.push(req.body[j].app_id);
                     myMap.set(count, req.body[j])
                     count++
                 }

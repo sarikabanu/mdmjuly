@@ -14,6 +14,8 @@ function appDataAccess() {
             }
             else {
                 console.log(request.size)
+                console.log(request)
+
                 const appModel = new App();
 
                 request.forEach(element => {
