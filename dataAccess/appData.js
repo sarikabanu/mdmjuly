@@ -5,7 +5,7 @@ var notify = require('../commons/notification');
 
 function appDataAccess() {
 
-    this.appInsert = async function (request, callback) {
+    this.appInsert =  function (request, callback) {
 
         db.getConnection(function (err, con) {
             if (err) {
