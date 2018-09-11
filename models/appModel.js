@@ -2,11 +2,10 @@
 
 class App {
 
-    appmod(data) {
+    appmod(appid,data) {
 
-        console.log('appid in model' + data.device_id)
         this.appInstance = {
-            AppId: data.app_id,
+            AppId: appid,
             Name: data.name,
             Version: data.version,
             Icon: data.icon,
@@ -17,15 +16,16 @@ class App {
     }
 
     appInsert(data) {
+// console.log('data#################')
+// console.log(data.app_id)
 
-        console.log('appid in model 2' + data.AppId)
         this.appInstance = {
             Id: uuid(),
-            AppId: data.AppId,
-            Name: data.Name,
-            Version: data.Version,
-            Icon: data.Icon,
-            DeviceId: data.DeviceId,
+            AppId: data.app_id,
+            Name: data.name,
+            Version: data.version,
+            Icon: data.icon,
+            DeviceId: data.device_id,
             CreatedDate: new Date(),
             Status: 1,
         };

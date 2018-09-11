@@ -5,30 +5,32 @@ var notify = require('../commons/notification');
 
 function appDataAccess() {
 
-    this.appInsert = function (request, callback) {
-        console.log('request ' + request[0].device_id)
-        console.log(request[0].device_id)
-        const appModel = new App();
+    this.appInsert = async function (request, callback) {
+
         db.getConnection(function (err, con) {
             if (err) {
                 logging.LoggingFunction('appInsert', err);
                 callback(new Error("connecting to database"));
             }
             else {
-                let i = 0;
-                for (i; i < request.length; i++) {
+                console.log(request.size)
+                const appModel = new App();
 
-                    let appuse = appModel.appmod(request[i]);
-                    con.query('Select * from app where AppId = ? and DeviceId = ?', [appuse.AppId, appuse.DeviceId], function (err, userResult) {
+                request.forEach(element => {
+
+                    con.query('Select * from app where AppId = ? and DeviceId = ?', [element.app_id, element.device_id], function (err, userResult) {
                         if (err) {
                             logging.LoggingFunction('appInsert', err);
                             callback(new Error("while fetching data of curent app"));
                         }
                         else {
+                            console.log('userResult.length  ' + userResult.length)
                             if (userResult.length > 0) {
-                                console.log('updating')
-                                //    let appup = appModel.appUpdate(appuse,userResult);
-                                con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appuse.Version, appuse.Icon, appuse.ModifiedDate, appuse.AppId, appuse.DeviceId], function (err, result) {
+                                console.log('updating');
+                              
+                                let appup = appModel.appUpdate(element, userResult);
+                                console.log(appup);
+                                con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appup.version, appup.icon, appup.ModifiedDate, appup.app_id, appup.device_id], function (err, result) {
                                     if (err) {
                                         logging.LoggingFunction('appupdate', err);
                                         callback(new Error("while updating"));
@@ -39,7 +41,10 @@ function appDataAccess() {
                                     }
                                 });
                             } else {
-                                let appInstance = appModel.appInsert(appuse);
+
+                                console.log('inserting');
+                                let appInstance = appModel.appInsert(element);
+
                                 con.query('insert into app set ?', appInstance, function (err, result) {
                                     if (err) {
                                         logging.LoggingFunction('appInsert', err);
@@ -52,13 +57,75 @@ function appDataAccess() {
                             }
                         }
                     });
-                }
+
+                });
                 callback(null, true);
 
             }
         });
     },
 
+
+        // this.appInsert =  function (request, callback) {
+
+        //     db.getConnection( function (err, con) {
+        //         if (err) {
+        //             logging.LoggingFunction('appInsert', err);
+        //             callback(new Error("connecting to database"));
+        //         }
+        //         else {
+        //             const appModel = new App();
+        //             var i = 0;
+        //             console.log(request.length)
+
+        //             for(var i = 0 ;i < request.length ;i++){
+
+        //                 let appuse = appModel.appmod(request[i]);
+        //                 console.log('i  '+i)
+
+        //                 if(request[i].device_id == request[i+1].device_id && request[i].app_id == request[i+1].app_id) console.log('appuse.AppId, appuse.DeviceId  =======     '+appuse.AppId, appuse.DeviceId)
+
+        //                 con.query('Select * from app where AppId = ? and DeviceId = ?', [appuse.AppId, appuse.DeviceId], function (err, userResult) {
+        //                     if (err) {
+        //                         logging.LoggingFunction('appInsert', err);
+        //                         callback(new Error("while fetching data of curent app"));
+        //                     }
+        //                     else {
+        //                         console.log('userResult.length  '+userResult.length)
+
+        //                         if (userResult.length > 0) {
+        //                             console.log('updating')
+        //                             //    let appup = appModel.appUpdate(appuse,userResult);
+        //                             con.query('update app set Version = ?,Icon = ?,ModifiedDate = ? where AppId = ? and DeviceId = ?', [appuse.Version, appuse.Icon, appuse.ModifiedDate, appuse.AppId, appuse.DeviceId], function (err, result) {
+        //                                 if (err) {
+        //                                     logging.LoggingFunction('appupdate', err);
+        //                                     callback(new Error("while updating"));
+        //                                 }
+        //                                 else {
+        //                                     console.log('successfully updated')
+        //                                     // callback(null, true);
+        //                                 }
+        //                             });
+        //                         } else {
+        //                             let appInstance = appModel.appInsert(appuse);
+        //                             con.query('insert into app set ?', appInstance, function (err, result) {
+        //                                 if (err) {
+        //                                     logging.LoggingFunction('appInsert', err);
+        //                                     callback(new Error("while inserting"));
+        //                                 }
+        //                                 else {
+        //                                     console.log('successful insertion')
+        //                                 }
+        //                             });
+        //                         }
+        //                     }
+        //                 });
+        //             }
+        //             callback(null, true);
+
+        //         }
+        //     });
+        // },
 
         this.appAction = function (request, callback) {
             const appModel = new App();

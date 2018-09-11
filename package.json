@@ -20,6 +20,7 @@
     "random-js": "^1.0.8",
     "sendotp": "^1.2.8",
     "streamifier": "^0.1.1",
+    "util": "^0.11.0",
     "winston": "^2.4.0"
   }
 }
